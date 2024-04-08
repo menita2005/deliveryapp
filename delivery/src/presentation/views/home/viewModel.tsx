@@ -1,40 +1,39 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { LoginAuthUseCase } from '../../../Domain/useCases/auth/LoginAuth';
-import { SaveUserLocalUseCase } from '../../../Domain/useCases/userLocal/SaveUserLocal';
 
-import { GetUserLocalUseCase } from '../../../Domain/useCases/userLocal/GetUserLocal';}
+import { SaveUserUseCase } from '../../../Domain/useCases/userLocal/SaveUserLocal';
+
+import { GetUserLocalUseCase } from '../../../Domain/useCases/userLocal/GetUserLocal';
+
+import { useUserLocal } from '../../hooks/useUserLocal';
+
 const HomeViewModel = () => {
 
 const [errorMessage, setErrorMessage] = useState('');
 
 const [values, setValues] = useState(
 
-    {
-    
-    email: '',
-    
-    password: ''
-    
-    }
-    
-    );
-    
-    //Insertar el código desde acá:
-    
-    useEffect(() => { //Se ejecuta cuando se instancia el viewModel
-    
-    getUserSession();
-    
-    }, []);
-    
-    const getUserSession = async () => {
-    
-    const user = await GetUserUseCase();
-    
-    console.log('Usuario Sesion: ' + JSON.stringify(user));
-    
-    }
+{
+
+email: '',
+
+password: ''
+
+}
+
+);
+
+const { user, getUserSession } = useUserLocal();
+
+console.log('Usuario: ' + JSON.stringify(user));
+
+useEffect(() => { //Se ejecuta cuando se instancia el viewModel
+
+getUserSession();
+
+}, []);
+
 const onChange = (property: string, value: any) => {
 
 setValues({...values, [property]: value});
@@ -43,27 +42,29 @@ setValues({...values, [property]: value});
 
 const login = async () => {
 
-    if (isValidForm()) {
-    
-    const response = await LoginAuthUseCase(values.email, values.password);
-    
-    console.log('Respuesta: ' + JSON.stringify(response));
-    
-    if(!response.success) {
-    
-    setErrorMessage(response.message);
-    
-    }
-    
-    else {
-    
-    await SaveUserUseCase(response.data);
-    
-    }
-    
-    }
-    
-    };
+if (isValidForm()) {
+
+const response = await LoginAuthUseCase(values.email, values.password);
+
+console.log('Respuesta: ' + JSON.stringify(response));
+
+if(!response.success) {
+
+setErrorMessage(response.message);
+
+}
+
+else {
+
+await SaveUserUseCase(response.data);
+
+getUserSession();
+
+}
+
+}
+
+};
 
 const isValidForm = () => {
 
@@ -90,6 +91,8 @@ return true;
 return {
 
 ...values,
+
+user,
 
 onChange,
 
