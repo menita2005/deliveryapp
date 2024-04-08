@@ -1,14 +1,16 @@
 import React from 'react'
+
+import { useNavigation } from '@react-navigation/native';
+
+import { View, Text, StyleSheet, Image, TextInput, ToastAndroid, Touchable, TouchableOpacity } from 'react-native';
+
+import { RoundedButton } from '../../components/RoundedButton';
+
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { RootStackParamList } from '../../../App';
 
-import { View, Text, StyleSheet, Image, TextInput, ToastAndroid } from 'react-native'
-
-import { RoundedButton } from '../../components/RoundedButton';
-
-export const HomeScreen = () => {
-    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+export const RegisterScreen = () => {
 
 return (
 
@@ -16,7 +18,7 @@ return (
 
 <Image
 
-source={require('./assets/chef.jpg')}
+source={require('../../../assets/chef.jpg')}
 
 style={styles.imageBackground}
 
@@ -26,25 +28,65 @@ style={styles.imageBackground}
 
 <Image
 
-source={require('./assets/logo.png')}
+source={require('../../../assets/user_image.png')}
 
 style={styles.logoImage}
 
 />
 
-<Text style={styles.logoText}>FOOD APP</Text>
+<Text style={styles.logoText}>SELECCIONA UNA IMAGEN</Text>
 
 </View>
 
 <View style={styles.form}>
 
-<Text style={styles.formText}>INGRESAR</Text>
+<Text style={styles.formText}>REGISTRARSE</Text>
 
 <View style={styles.formInput}>
 
 <Image style={styles.formIcon}
 
-source={require('./assets/email.png')}
+source={require('../../../assets/user.png')}
+
+/>
+
+<TextInput
+
+style={styles.formTextInput}
+
+placeholder='Nombres'
+
+keyboardType='default'
+
+/>
+
+</View>
+
+<View style={styles.formInput}>
+
+<Image style={styles.formIcon}
+
+source={require('../../../assets/my_user.png')}
+
+/>
+
+<TextInput
+
+style={styles.formTextInput}
+
+placeholder='Apellidos'
+
+keyboardType='default'
+
+/>
+
+</View>
+
+<View style={styles.formInput}>
+
+<Image style={styles.formIcon}
+
+source={require('../../../assets/email.png')}
 
 />
 
@@ -64,7 +106,27 @@ keyboardType='email-address'
 
 <Image style={styles.formIcon}
 
-source={require('./assets/password.png')}
+source={require('../../../assets/phone.png')}
+
+/>
+
+<TextInput
+
+style={styles.formTextInput}
+
+placeholder='Teléfono'
+
+keyboardType='numeric'
+
+/>
+
+</View>
+
+<View style={styles.formInput}>
+
+<Image style={styles.formIcon}
+
+source={require('../../../assets/password.png')}
 
 />
 
@@ -82,17 +144,31 @@ secureTextEntry={true}
 
 </View>
 
-<View style={{ marginTop: 30 }}>
+<View style={styles.formInput}>
 
-<RoundedButton text='ENTRAR' onPress={() => ToastAndroid.show('HOLA!', ToastAndroid.SHORT)} />
+<Image style={styles.formIcon}
+
+source={require('../../../assets/confirm_password.png')}
+
+/>
+
+<TextInput
+
+style={styles.formTextInput}
+
+placeholder='Confirmar Contraseña'
+
+keyboardType='default'
+
+secureTextEntry={true}
+
+/>
 
 </View>
 
-<View style={styles.formRegister}>
+<View style={{ marginTop: 30 }}>
 
-<Text>¿No tienes cuenta?</Text>
-
-<Text style={styles.formRegisterText}>Regístrate</Text>
+<RoundedButton text='CONFIRMAR' onPress={() => ToastAndroid.show('HOLA!', ToastAndroid.SHORT)} />
 
 </View>
 
@@ -130,7 +206,7 @@ form: {
 
 width: '100%',
 
-height: '40%',
+height: '70%',
 
 backgroundColor: 'white',
 
@@ -168,7 +244,7 @@ formInput: {
 
 flexDirection: 'row',
 
-marginTop: 30,
+marginTop: 25,
 
 },
 
@@ -216,7 +292,9 @@ position: 'absolute',
 
 alignSelf: 'center',
 
-top: '15%',
+top: '5%',
+
+alignItems: 'center',
 
 },
 
