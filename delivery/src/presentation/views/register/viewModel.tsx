@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 
-import { ApiDelivery } from "../../../Data/sources/remote/api/ApiDelivery";
-
 import { RegisterAuthUseCase } from "../../../Domain/useCases/auth/RegisterAuth";
 
 const RegisterViewModel = () => {
+
+const [errorMessage, setErrorMessage] = useState('');
 
 const [values, setValues] = useState({
 
@@ -28,13 +28,77 @@ setValues({ ...values, [property]: value });
 
 }
 
-const register = async() => {
+const register = async () => {
 
-const { result, error } = await RegisterAuthUseCase(values);
+if (!isValidForm()) {
 
-console.log('result' + JSON.stringify(result));
+const response = await RegisterAuthUseCase(values);
 
-console.log('error' + error);
+console.log('Result' + JSON.stringify(response));
+
+}
+
+}
+
+const isValidForm = (): boolean => {
+
+if (values.name === '') {
+
+setErrorMessage('El nombre es requerido');
+
+return false;
+
+}
+
+if (values.lastname === '') {
+
+setErrorMessage('El apellido es requerido');
+
+return false;
+
+}
+
+if (values.email === '') {
+
+setErrorMessage('El correo es requerido');
+
+return false;
+
+}
+
+if (values.phone === '') {
+
+setErrorMessage('El teléfono es requerido');
+
+return false;
+
+}
+
+if (values.password === '') {
+
+setErrorMessage('La contraseña es requerida');
+
+return false;
+
+}
+
+if (values.confirmPassword === '') {
+
+setErrorMessage('La confirmación de contraseña es requerida');
+
+return false;
+
+}
+
+if (values.password !== values.confirmPassword) {
+
+setErrorMessage('Las contraseñas no coinciden');
+
+return false;
+
+}
+
+return true;
 
 }
 
@@ -44,7 +108,9 @@ return {
 
 onChange,
 
-register
+register,
+
+errorMessage
 
 }
 

@@ -1,16 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-import { View, Text, StyleSheet, Image, TextInput, ToastAndroid, Touchable, TouchableOpacity } from 'react-native';
+import { View, Text, Image, ScrollView, ToastAndroid } from 'react-native'
 
-import { RoundedButton } from '../../../Presentation/components/RoundedButton';
+import { RoundedButton } from '../../components/RoundedButton';
 
 import useViewModel from './ViewModel';
 
-import { CustomTextInput } from '../../../Presentation/components/CustomTextInput';
+import { CustomTextInput } from '../../components/CustomTextInput';
+
+import styles from './Styles';
 
 export const RegisterScreen = () => {
 
-const { name, lastname, phone, email, password, confirmPassword, onChange, register } = useViewModel();
+const { name, lastname, email, phone, password, confirmPassword, errorMessage, onChange, register } = useViewModel();
+
+//Para saber si la variable ya tiene establecido un valor
+
+useEffect(() => {
+
+if (errorMessage !== '')
+
+ToastAndroid.show(errorMessage, ToastAndroid.LONG)
+
+}, [errorMessage]);
 
 return (
 
@@ -40,6 +52,8 @@ style={styles.logoImage}
 
 <View style={styles.form}>
 
+<ScrollView>
+
 <Text style={styles.formText}>REGISTRARSE</Text>
 
 <CustomTextInput
@@ -48,13 +62,13 @@ image={require('../../../../assets/user.png')}
 
 placeholder='Nombres'
 
+value={name}
+
 keyboardType='default'
 
 property='name'
 
 onChangeText={onChange}
-
-value={name}
 
 />
 
@@ -64,13 +78,13 @@ image={require('../../../../assets/my_user.png')}
 
 placeholder='Apellidos'
 
+value={lastname}
+
 keyboardType='default'
 
 property='lastname'
 
 onChangeText={onChange}
-
-value={lastname}
 
 />
 
@@ -80,13 +94,13 @@ image={require('../../../../assets/email.png')}
 
 placeholder='Correo electrónico'
 
+value={email}
+
 keyboardType='email-address'
 
 property='email'
 
 onChangeText={onChange}
-
-value={email}
 
 />
 
@@ -96,13 +110,13 @@ image={require('../../../../assets/phone.png')}
 
 placeholder='Teléfono'
 
+value={phone}
+
 keyboardType='numeric'
 
 property='phone'
 
 onChangeText={onChange}
-
-value={phone}
 
 />
 
@@ -112,15 +126,15 @@ image={require('../../../../assets/password.png')}
 
 placeholder='Contraseña'
 
+value={password}
+
 keyboardType='default'
+
+secureTextEntry={true}
 
 property='password'
 
 onChangeText={onChange}
-
-value={password}
-
-secureTextEntry={true}
 
 />
 
@@ -128,25 +142,27 @@ secureTextEntry={true}
 
 image={require('../../../../assets/confirm_password.png')}
 
-placeholder='Confirmar Contraseña'
+placeholder='Confirmar contraseña'
+
+value={confirmPassword}
 
 keyboardType='default'
+
+secureTextEntry={true}
 
 property='confirmPassword'
 
 onChangeText={onChange}
 
-value={confirmPassword}
-
-secureTextEntry={true}
-
 />
 
 <View style={{ marginTop: 30 }}>
 
-<RoundedButton text='CONFIRMAR' onPress={() => register()} />
+<RoundedButton text='GUARDAR' onPress={() => register()}/>
 
 </View>
+
+</ScrollView>
 
 </View>
 
