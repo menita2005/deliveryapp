@@ -13,6 +13,7 @@ export type RootStackParamList = {
 HomeScreen: undefined;
 
 RegisterScreen: undefined;
+ProfileInfoScreen: undefined;
 
 };
 
@@ -53,6 +54,13 @@ headerShown: true,
 title: 'Registro',
 
 }}
+
+/>
+<Stack.Screen
+
+name="ProfileInfoScreen"
+
+component={ProfileInfoScreen}
 
 />
 

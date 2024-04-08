@@ -6,7 +6,7 @@ import { View, Text, Image, TextInput, StyleSheet, ToastAndroid, TouchableOpacit
 
 import { RoundedButton } from '../../../Presentation/components/RoundedButton';
 
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 
 import { RootStackParamList } from '../../../../App';
 
@@ -16,11 +16,13 @@ import { CustomTextInput } from '../../components/CustomTextInput';
 
 import styles from './Styles';
 
-export const HomeScreen = () => {
+interface Props extends StackScreenProps<RootStackParamList, 'HomeScreen'>{};
 
-const { email, password, errorMessage, onChange, login } = useViewModel();
+export const HomeScreen = ({navigation, route}: Props) => {
 
-const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+const { email, password, errorMessage, user, onChange, login } = useViewModel();
+
+//const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
 useEffect(() => {
 
@@ -31,6 +33,16 @@ ToastAndroid.show(errorMessage, ToastAndroid.LONG);
 }
 
 }, [errorMessage]);
+
+useEffect(() => {
+
+if (user?.id !== null && user?.id !== undefined) {
+
+navigation.replace('ProfileInfoScreen');
+
+}
+
+}, [user]);
 
 return (
 
