@@ -1,5 +1,5 @@
 import React from 'react'
-import { MyColors } from '../theme/app-theme'
+import { MyColors } from '../presentation/theme/app-theme'
 
 import { TouchableOpacity, Text, StyleSheet } from 'react-native'
 interface Props {
