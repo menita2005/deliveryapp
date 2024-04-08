@@ -1,4 +1,5 @@
 import React from 'react'
+import { MyColors } from '../theme/app-theme'
 
 import { TouchableOpacity, Text, StyleSheet } from 'react-native'
 interface Props {
@@ -36,7 +37,7 @@ width: '100%',
 
 height: 50,
 
-backgroundColor: 'orange',
+backgroundColor: MyColors.primary,
 
 alignItems: 'center',
 
