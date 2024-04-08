@@ -14,4 +14,6 @@ export interface User {
     
     confirmPassword: string;
     
+    session_token?: string;
+    
     }
